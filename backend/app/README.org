@@ -1,0 +1,33 @@
+* requirements
+#+BEGIN_SRC python
+pip3 install python-jose
+pip3 install passlib
+#+END_SRC
+
+* path
+添加路径 backend/ 到 python 查询路径
+
+#+BEGIN_SRC python
+import site
+print(site.getsitepackages())
+#+END_SRC
+
+添加路径到 some_name.pth (没有需要新建, 只要以 .pth 结尾即可)
+
+
+如下的临时路径在 reload 时会不起作用
+#+BEGIN_SRC python
+import os
+import sys
+
+
+try:
+    path = os.path.split(os.path.realpath(__file__))[0]
+except NameError:
+    path = os.getcwd() or os.getenv('PWD')
+root = os.path.dirname(path)
+sys.path.insert(0, root)
+#+END_SRC
+
+* code note
+不加 get_current_user 表示不需要 oauth2 验证, doc 页面也不会出现锁

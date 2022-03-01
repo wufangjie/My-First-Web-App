@@ -20,11 +20,3 @@ if settings.BACKEND_CORS_ORIGINS:
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-
-
-
-"""
-pip3 install python-jose
-pip3 install passlib
-# 不加 get_current_user 表示不需要 oauth2 验证, doc 页面也不会出现锁
-"""
