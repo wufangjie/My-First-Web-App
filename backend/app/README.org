@@ -12,7 +12,7 @@ import site
 print(site.getsitepackages())
 #+END_SRC
 
-添加路径到 some_name.pth (没有需要新建, 只要以 .pth 结尾即可)
+添加路径 (本例为 app 所在的路径) 到上述打印的路径之一的 some_name.pth 文件 (没有需要新建, 只要以 .pth 结尾即可)
 
 
 如下的临时路径在 reload 时会不起作用
