@@ -37,15 +37,16 @@ def login_access_token(
 
 
 # TODO: does not works
-@router.post("/login/log-out", response_model=schemas.Message)
-def log_out(
-        db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(deps.get_current_user),
-) -> Any:
-    access_token_expires = timedelta(
-        minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
-    )
-    security.create_access_token(
-        current_user.id, expires_delta=access_token_expires
-    )
-    return schemas.Message() # not return, so noone knowns the token
+# DONE: 在前端直接删除 token 会是更好的选择, 而不是发送一个请求
+# @router.post("/login/log-out", response_model=schemas.Message)
+# def log_out(
+#         db: Session = Depends(deps.get_db),
+#         current_user: models.User = Depends(deps.get_current_user),
+# ) -> Any:
+#     access_token_expires = timedelta(
+#         minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
+#     )
+#     security.create_access_token(
+#         current_user.id, expires_delta=access_token_expires
+#     )
+#     return schemas.Message() # not return, so noone knowns the token
