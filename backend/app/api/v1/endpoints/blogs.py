@@ -1,5 +1,5 @@
 import os
-from typing import Any, List
+from typing import Any, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form, Body
 from fastapi.security import OAuth2PasswordRequestForm
@@ -20,12 +20,20 @@ router = APIRouter()
 # but you can't also declare Body fields that you expect to receive as JSON
 # https://fastapi.tiangolo.com/tutorial/request-forms-and-files/?h=file+form
 
+# @router.post("/uploadfile/")
+# async def create_upload_file(file: Optional[UploadFile] = None):
+#     if not file:
+#         return {"message": "No upload file sent"}
+#     else:
+#         return {"filename": file.filename}
+
+
 @router.post("/create", response_model=schemas.Message)#BlogInDB)
 async def blog_create(
         *,
         db: Session = Depends(deps.get_db),
-        pictures: List[UploadFile] = File(...),
-        # blog_in: schemas.BlogCreate = Body(..., embed=True),
+        pictures: List[UploadFile] = Form([], description="没有图片就不要加该字段, 千万不要发送空值"),
+        #blog_in: schemas.BlogCreate = Body(..., embed=True),
         content: str = Form(...),
         state: int = Form(0, description="状态: {-3: 永久删除, -2: 回收站, -1: 草稿, 0: 正常, 1: 仅自己可见}", le=1, ge=-3),
         current_user: models.User = Depends(deps.get_current_user),

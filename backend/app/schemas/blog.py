@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional, List
 from pydantic import BaseModel, Field
+from fastapi import UploadFile
 from .user import UserResp
 from .comment import CommentResp
 
@@ -8,6 +9,8 @@ from .comment import CommentResp
 class BlogCreate(BaseModel):
     content: str
     state: int = 0
+    # 貌似不能把 file: UploadFile = File(...) 放到 pydantic model 里, 详见
+    # https://github.com/tiangolo/fastapi/issues/657
 
 
 class BlogUpdate(BaseModel):
