@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Tuple, Optional, Union
 from collections import defaultdict
 
 from fastapi.encoders import jsonable_encoder
@@ -100,6 +100,21 @@ class CRUDComment(CRUDBase[Comments, CommentCreate, CommentUpdate]):
                .all()
         )
         return res
+
+    def get_comment_counts_by_blog_ids(
+            self,
+            db: Session,
+            *,
+            blog_ids: List[int],
+    ) -> List[int]: # [count], len = len(blog_ids)
+        dct = dict(db
+                   .query(Comments.blog_id, func.count("*").label("count"))
+                   .filter(Comments.blog_id.in_(blog_ids))
+                   .filter(Comments.state == 0)
+                   .group_by(Comments.blog_id)
+                   .all()
+        )
+        return [dct.get(blog_id, 0) for blog_id in blog_ids]
 
 
 comment = CRUDComment(Comments)

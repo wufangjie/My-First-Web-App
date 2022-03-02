@@ -51,6 +51,8 @@ def get_blog_full_and_user_ids(
     pictures = crud.picture.get_picture_urls_by_blog_ids(db, blog_ids=blog_ids)
     comments = crud.comment.get_comments_by_blog_ids(db, blog_ids=blog_ids)
     thumbs = crud.thumb.get_thumb_user_ids_by_blog_ids(db, blog_ids=blog_ids)
+    c_count = crud.comment.get_comment_counts_by_blog_ids(db, blog_ids=blog_ids)
+    t_count = crud.thumb.get_thumb_counts_by_blog_ids(db, blog_ids=blog_ids)
 
     ret_json = jsonable_encoder(blog_lst)
     user_ids = {blog.user_id for blog in blog_lst} # user_id ever been here
@@ -58,6 +60,8 @@ def get_blog_full_and_user_ids(
         ret_json[i]["pictures"] = jsonable_encoder(pictures[i])
         ret_json[i]["comments"] = jsonable_encoder(comments[i])
         ret_json[i]["thumbs"] = jsonable_encoder(thumbs[i])
+        ret_json[i]["c_total"] = c_count[i]
+        ret_json[i]["t_total"] = t_count[i]
 
         for comment in comments[i]:
             user_ids.add(comment.user_id)

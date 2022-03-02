@@ -57,6 +57,8 @@ class BlogWithoutUserDetail(BlogSimple):
     pictures: List[str]
     comments: List[CommentResp]
     thumbs: List[int]
+    c_total: int # 评论总数
+    t_total: int # 点赞总数
 
 
 class BlogsResp(BaseModel):

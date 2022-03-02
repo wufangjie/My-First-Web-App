@@ -51,6 +51,21 @@ class CRUDThumb(CRUDBase[Thumb, ThumbCreate, ThumbUpdate]):
                 .count()
         )
 
+    def get_thumb_counts_by_blog_ids(
+            self,
+            db: Session,
+            *,
+            blog_ids: List[int],
+    ) -> List[int]: # [count], len = len(blog_ids)
+        dct = dict(db
+                    .query(Thumb.blog_id, func.count("*").label("count"))
+                    .filter(Thumb.blog_id.in_(blog_ids))
+                    .filter(Thumb.state > 0)
+                    .group_by(Thumb.blog_id)
+                    .all()
+        )
+        return [dct.get(blog_id, 0) for blog_id in blog_ids]
+
     def get_thumb_user_ids_by_blog_id(
             self,
             db: Session,
