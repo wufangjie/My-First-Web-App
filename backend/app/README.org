@@ -1,5 +1,12 @@
 * requirements
-#+BEGIN_SRC python
+https://fastapi.tiangolo.com/tutorial/#install-fastapi
+
+#+BEGIN_SRC sh
+pip3 install fastapi
+pip3 install "uvicorn[standard]"
+#+END_SRC
+
+#+BEGIN_SRC sh
 pip3 install python-jose
 pip3 install passlib
 #+END_SRC
